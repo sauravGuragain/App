@@ -1,0 +1,3 @@
+<resources>
+    <style name="Theme.FMCG" parent="android:Theme.Material.Light.NoActionBar" />
+</resources>

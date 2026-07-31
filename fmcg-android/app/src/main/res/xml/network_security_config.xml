@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Cleartext HTTP is permitted ONLY for local development hosts so the debug
+  build can reach a backend running on your machine. Everything else must use
+  HTTPS, so production traffic stays encrypted.
+  For a physical test device, add your computer's LAN IP (e.g. 192.168.1.20)
+  as another <domain> below.
+-->
+<network-security-config>
+    <domain-config cleartextTrafficPermitted="true">
+        <domain includeSubdomains="true">10.0.2.2</domain>
+        <domain includeSubdomains="true">localhost</domain>
+        <domain includeSubdomains="true">127.0.0.1</domain>
+    </domain-config>
+</network-security-config>

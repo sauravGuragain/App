@@ -1,0 +1,19 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+.env
+# Android / Gradle
+.gradle/
+build/
+local.properties
+*.iml
+.idea/
+# OS
+.DS_Store
+*.pyc
+media/
+*.db
+fmcg-android/app/google-services.json
+*.apk
+*.hprof
