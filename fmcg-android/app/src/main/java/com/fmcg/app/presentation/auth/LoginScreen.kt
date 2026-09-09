@@ -39,7 +39,7 @@ fun LoginScreen(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        Text("FMCG Field", style = MaterialTheme.typography.headlineMedium)
+        Text("OM Services", style = MaterialTheme.typography.headlineMedium)
         Text("Sign in to continue", style = MaterialTheme.typography.bodyMedium)
 
         OutlinedTextField(

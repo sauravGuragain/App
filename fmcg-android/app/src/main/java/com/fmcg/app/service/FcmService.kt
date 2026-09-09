@@ -28,7 +28,7 @@ class FcmService : FirebaseMessagingService() {
     }
 
     override fun onMessageReceived(message: RemoteMessage) {
-        val title = message.notification?.title ?: "FMCG"
+        val title = message.notification?.title ?: "OM Services"
         val body = message.notification?.body ?: return
         showNotification(title, body)
     }

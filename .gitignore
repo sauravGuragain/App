@@ -17,3 +17,7 @@ media/
 fmcg-android/app/google-services.json
 *.apk
 *.hprof
+
+keystore.properties
+*.jks
+*.keystore

@@ -38,6 +38,7 @@ fun MarketingHomeScreen(
     onViewRoute: () -> Unit,
     onPinLocation: () -> Unit,
     onStores: () -> Unit,
+    onProducts: () -> Unit,
     onOrders: () -> Unit,
     pickedLocation: String?,
     onPickedConsumed: () -> Unit,
@@ -128,6 +129,9 @@ fun MarketingHomeScreen(
             }
             OutlinedButton(onClick = onOrders, modifier = Modifier.fillMaxWidth()) {
                 Text("My orders")
+            }
+            OutlinedButton(onClick = onProducts, modifier = Modifier.fillMaxWidth()) {
+                Text("Products")
             }
             OutlinedButton(onClick = onViewRoute, modifier = Modifier.fillMaxWidth()) {
                 Text("View my route")

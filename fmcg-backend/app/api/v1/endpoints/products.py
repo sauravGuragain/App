@@ -1,8 +1,8 @@
-"""Product catalogue. Reads: any authenticated user. Writes: admin only."""
+"""Product catalogue. Reads: any authenticated user. Add/edit: admin + marketing. Delete: admin only."""
 from fastapi import APIRouter, HTTPException, status
 
 from app import crud
-from app.api.deps import AdminUser, CurrentUser, PageDep, SessionDep
+from app.api.deps import AdminUser, CurrentUser, FieldUser, PageDep, SessionDep
 from app.models.product import Product
 from app.schemas.common import Message, Page
 from app.schemas.product import ProductCreate, ProductOut, ProductUpdate
@@ -18,7 +18,7 @@ def list_products(db: SessionDep, page: PageDep, _: CurrentUser, active_only: bo
 
 
 @router.post("", response_model=ProductOut, status_code=status.HTTP_201_CREATED)
-def create_product(payload: ProductCreate, db: SessionDep, _: AdminUser):
+def create_product(payload: ProductCreate, db: SessionDep, _: FieldUser):
     if crud.product.get_by_sku(db, payload.sku):
         raise HTTPException(status.HTTP_409_CONFLICT, "SKU already exists")
     return crud.product.create(db, payload.model_dump())
@@ -33,7 +33,7 @@ def get_product(product_id: int, db: SessionDep, _: CurrentUser):
 
 
 @router.patch("/{product_id}", response_model=ProductOut)
-def update_product(product_id: int, payload: ProductUpdate, db: SessionDep, _: AdminUser):
+def update_product(product_id: int, payload: ProductUpdate, db: SessionDep, _: FieldUser):
     obj = crud.product.get(db, product_id)
     if obj is None:
         raise HTTPException(status.HTTP_404_NOT_FOUND, "Product not found")

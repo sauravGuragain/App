@@ -20,3 +20,21 @@ data class ProductPageDto(
     val skip: Int,
     val limit: Int,
 )
+
+@Serializable
+data class ProductCreateDto(
+    val name: String,
+    val sku: String,
+    val unit: String = "pcs",
+    @SerialName("default_price") val defaultPrice: String,
+    @SerialName("is_active") val isActive: Boolean = true,
+)
+
+/** PATCH body — the backend ignores unset fields, and SKU is immutable. */
+@Serializable
+data class ProductUpdateDto(
+    val name: String? = null,
+    val unit: String? = null,
+    @SerialName("default_price") val defaultPrice: String? = null,
+    @SerialName("is_active") val isActive: Boolean? = null,
+)

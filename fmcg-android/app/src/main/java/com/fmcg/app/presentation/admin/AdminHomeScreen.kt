@@ -25,6 +25,7 @@ import com.fmcg.app.presentation.home.HomeViewModel
 fun AdminHomeScreen(
     onReports: () -> Unit,
     onUsers: () -> Unit,
+    onProducts: () -> Unit,
     onStores: () -> Unit,
     onOrders: () -> Unit,
     onLoggedOut: () -> Unit,
@@ -50,6 +51,7 @@ fun AdminHomeScreen(
             Button(onClick = onStores, modifier = Modifier.fillMaxWidth()) { Text("All stores") }
             Button(onClick = onOrders, modifier = Modifier.fillMaxWidth()) { Text("All orders") }
             Button(onClick = onUsers, modifier = Modifier.fillMaxWidth()) { Text("Users") }
+            Button(onClick = onProducts, modifier = Modifier.fillMaxWidth()) { Text("Products") }
         }
     }
 }

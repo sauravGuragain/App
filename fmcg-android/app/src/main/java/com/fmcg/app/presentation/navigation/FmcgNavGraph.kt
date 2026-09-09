@@ -12,6 +12,7 @@ import androidx.navigation.navArgument
 import com.fmcg.app.presentation.admin.AdminHomeScreen
 import com.fmcg.app.presentation.admin.AdminReportsScreen
 import com.fmcg.app.presentation.admin.users.UserManagementScreen
+import com.fmcg.app.presentation.product.ProductManagementScreen
 import com.fmcg.app.presentation.auth.LoginScreen
 import com.fmcg.app.presentation.common.camera.CameraCaptureScreen
 import com.fmcg.app.presentation.common.map.LocationPickerScreen
@@ -62,6 +63,7 @@ fun FmcgNavGraph(navController: NavHostController = rememberNavController()) {
                 onPinLocation = { navController.navigate(Routes.LOCATION_PICKER) },
                 onStores = { navController.navigate(Routes.STORE_LIST) },
                 onOrders = { navController.navigate(Routes.orderList(null)) },
+                onProducts = { navController.navigate(Routes.PRODUCTS) },
                 pickedLocation = picked,
                 onPickedConsumed = { entry.savedStateHandle[PICKED_LOCATION_KEY] = null },
             )
@@ -151,6 +153,7 @@ fun FmcgNavGraph(navController: NavHostController = rememberNavController()) {
             AdminHomeScreen(
                 onReports = { navController.navigate(Routes.ADMIN_REPORTS) },
                 onUsers = { navController.navigate(Routes.ADMIN_USERS) },
+                onProducts = { navController.navigate(Routes.PRODUCTS) },
                 onStores = { navController.navigate(Routes.STORE_LIST) },
                 onOrders = { navController.navigate(Routes.orderList(null)) },
                 onLoggedOut = { toLogin(navController) },
@@ -163,6 +166,10 @@ fun FmcgNavGraph(navController: NavHostController = rememberNavController()) {
 
         composable(Routes.ADMIN_USERS) {
             UserManagementScreen(onBack = { navController.popBackStack() })
+        }
+
+        composable(Routes.PRODUCTS) {
+            ProductManagementScreen(onBack = { navController.popBackStack() })
         }
         composable(Routes.DELIVERY_HOME) {
             DeliveryHomeScreen(

@@ -2,6 +2,7 @@ package com.fmcg.app.presentation.common.map
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -29,6 +30,8 @@ fun OsmMap(
     markers: List<MapMarker> = emptyList(),
     routePoints: List<GeoPoint> = emptyList(),
     onMapTap: ((GeoPoint) -> Unit)? = null,
+    /** Set to move the camera after creation (e.g. once GPS returns a fix). */
+    recenterTo: GeoPoint? = null,
 ) {
     val context = LocalContext.current
     val lifecycleOwner = LocalLifecycleOwner.current
@@ -40,6 +43,10 @@ fun OsmMap(
             controller.setZoom(zoom)
             controller.setCenter(center)
         }
+    }
+
+    LaunchedEffect(recenterTo) {
+        recenterTo?.let { mapView.controller.animateTo(it) }
     }
 
     DisposableEffect(lifecycleOwner) {
