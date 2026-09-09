@@ -19,6 +19,7 @@ object Routes {
     const val DELIVERY_DETAIL = "delivery_detail/{deliveryId}"
     const val CAMERA_CAPTURE = "camera_capture"
     const val ADMIN_REPORTS = "admin_reports"
+    const val ADMIN_USERS = "admin_users"
 
     fun storeDetail(id: Int) = "store_detail/$id"
     fun storeForm(id: Int? = null) = "store_form?storeId=${id ?: -1}"

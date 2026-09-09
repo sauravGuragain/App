@@ -11,6 +11,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.fmcg.app.presentation.admin.AdminHomeScreen
 import com.fmcg.app.presentation.admin.AdminReportsScreen
+import com.fmcg.app.presentation.admin.users.UserManagementScreen
 import com.fmcg.app.presentation.auth.LoginScreen
 import com.fmcg.app.presentation.common.camera.CameraCaptureScreen
 import com.fmcg.app.presentation.common.map.LocationPickerScreen
@@ -149,6 +150,7 @@ fun FmcgNavGraph(navController: NavHostController = rememberNavController()) {
         composable(Routes.ADMIN_HOME) {
             AdminHomeScreen(
                 onReports = { navController.navigate(Routes.ADMIN_REPORTS) },
+                onUsers = { navController.navigate(Routes.ADMIN_USERS) },
                 onStores = { navController.navigate(Routes.STORE_LIST) },
                 onOrders = { navController.navigate(Routes.orderList(null)) },
                 onLoggedOut = { toLogin(navController) },
@@ -157,6 +159,10 @@ fun FmcgNavGraph(navController: NavHostController = rememberNavController()) {
 
         composable(Routes.ADMIN_REPORTS) {
             AdminReportsScreen(onBack = { navController.popBackStack() })
+        }
+
+        composable(Routes.ADMIN_USERS) {
+            UserManagementScreen(onBack = { navController.popBackStack() })
         }
         composable(Routes.DELIVERY_HOME) {
             DeliveryHomeScreen(

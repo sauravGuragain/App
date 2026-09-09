@@ -1,7 +1,5 @@
 package com.fmcg.app.data.remote.dto
 
-import com.fmcg.app.domain.model.AuthUser
-import com.fmcg.app.domain.model.UserRole
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -25,13 +23,4 @@ data class UserDto(
     val role: String,
     val phone: String? = null,
     @SerialName("is_active") val isActive: Boolean = true,
-) {
-    fun toDomain() = AuthUser(
-        id = id,
-        email = email,
-        fullName = fullName,
-        role = UserRole.fromWire(role),
-        phone = phone,
-        isActive = isActive,
-    )
-}
+)

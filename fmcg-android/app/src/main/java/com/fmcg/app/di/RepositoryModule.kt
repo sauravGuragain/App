@@ -57,4 +57,10 @@ abstract class RepositoryModule {
     abstract fun bindPushRepository(
         impl: com.fmcg.app.data.repository.PushRepositoryImpl,
     ): com.fmcg.app.domain.repository.PushRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindUserRepository(
+        impl: com.fmcg.app.data.repository.UserRepositoryImpl,
+    ): com.fmcg.app.domain.repository.UserRepository
 }
