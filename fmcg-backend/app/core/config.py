@@ -24,6 +24,9 @@ class Settings(BaseSettings):
     POSTGRES_DB: str = "fmcg"
     POSTGRES_HOST: str = "db"
     POSTGRES_PORT: int = 5432
+    # Full connection string. When set it wins over the POSTGRES_* parts above —
+    # managed providers (Supabase, Neon) hand you one of these directly.
+    DATABASE_URL_OVERRIDE: str = ""
 
     # Security
     SECRET_KEY: str = Field(default="change_me", min_length=8)
@@ -39,6 +42,12 @@ class Settings(BaseSettings):
     MEDIA_DIR: str = "media"
     MEDIA_URL_PREFIX: str = "/media"
 
+    # Supabase Storage. Leave blank to keep images on local disk instead.
+    # SUPABASE_SERVICE_KEY is the service_role key — server-side only.
+    SUPABASE_URL: str = ""
+    SUPABASE_SERVICE_KEY: str = ""
+    SUPABASE_BUCKET: str = "proof-photos"
+
     # First admin, seeded on startup if the users table is empty.
     FIRST_ADMIN_EMAIL: str = "admin@example.com"
     FIRST_ADMIN_PASSWORD: str = "changeme123"
@@ -47,6 +56,15 @@ class Settings(BaseSettings):
     @computed_field  # type: ignore[misc]
     @property
     def DATABASE_URL(self) -> str:
+        if self.DATABASE_URL_OVERRIDE:
+            url = self.DATABASE_URL_OVERRIDE
+            # Managed providers hand out bare `postgresql://` URLs; SQLAlchemy
+            # needs the driver named explicitly.
+            if url.startswith("postgresql://"):
+                url = url.replace("postgresql://", "postgresql+psycopg2://", 1)
+            elif url.startswith("postgres://"):
+                url = url.replace("postgres://", "postgresql+psycopg2://", 1)
+            return url
         return str(
             PostgresDsn.build(
                 scheme="postgresql+psycopg2",
