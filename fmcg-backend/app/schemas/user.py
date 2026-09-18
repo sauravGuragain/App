@@ -8,6 +8,7 @@ from app.schemas.common import ORMModel, UserRole
 
 # ---------- Users ----------
 class UserBase(BaseModel):
+    username: str = Field(min_length=1, max_length=120)
     email: EmailStr
     full_name: str = Field(min_length=1, max_length=120)
     role: UserRole
@@ -29,12 +30,13 @@ class UserUpdate(BaseModel):
 
 class UserOut(ORMModel, UserBase):
     id: int
+    organization_id: int | None = None
     created_at: datetime
 
 
 # ---------- Auth ----------
 class LoginRequest(BaseModel):
-    email: EmailStr
+    username: str
     password: str
 
 

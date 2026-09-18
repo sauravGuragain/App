@@ -10,6 +10,7 @@ from app.api.v1.endpoints import (
     orders,
     products,
     reports,
+    routes,
     stores,
     users,
 )
@@ -26,6 +27,7 @@ api_router.include_router(auth.router, prefix="/auth", tags=["auth"])
 api_router.include_router(users.router, prefix="/users", tags=["users"])
 api_router.include_router(products.router, prefix="/products", tags=["products"])
 api_router.include_router(stores.router, prefix="/stores", tags=["stores"])
+api_router.include_router(routes.router, prefix="/routes", tags=["routes"])
 api_router.include_router(orders.router, prefix="/orders", tags=["orders"])
 api_router.include_router(deliveries.router, prefix="/deliveries", tags=["deliveries"])
 api_router.include_router(gps.router, prefix="/gps", tags=["gps"])

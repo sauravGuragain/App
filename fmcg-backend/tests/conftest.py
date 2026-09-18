@@ -46,25 +46,33 @@ def client():
 
 
 # ---- helpers shared by tests ----
-def login(client, email, password):
+def login(client, username, password):
+    """Login with username and password. Returns authorization headers."""
     r = client.post(
-        "/api/v1/auth/login", data={"username": email, "password": password}
+        "/api/v1/auth/login", data={"username": username, "password": password}
     )
     assert r.status_code == 200, r.text
     return {"Authorization": f"Bearer {r.json()['access_token']}"}
 
 
 def make_user(client, admin_headers, email, role, pw="supersecret123"):
+    """Create a new user. Username is derived from email (part before @)."""
+    username = email.split("@")[0]
     r = client.post(
         "/api/v1/users",
         headers=admin_headers,
-        json={"email": email, "full_name": email.split("@")[0],
-              "role": role, "password": pw},
+        json={
+            "username": username,
+            "email": email,
+            "full_name": username,
+            "role": role,
+            "password": pw,
+        },
     )
     assert r.status_code == 201, r.text
-    return r.json(), login(client, email, pw)
+    return r.json(), login(client, username, pw)
 
 
 @pytest.fixture()
 def admin_headers(client):
-    return login(client, settings.FIRST_ADMIN_EMAIL, settings.FIRST_ADMIN_PASSWORD)
+    return login(client, "admin", settings.FIRST_ADMIN_PASSWORD)

@@ -34,10 +34,10 @@ def login(
     db: SessionDep,
     form: Annotated[OAuth2PasswordRequestForm, Depends()],
 ):
-    user = crud.user.get_by_email(db, form.username)
+    user = crud.user.get_by_username(db, form.username)
     if user is None or not verify_password(form.password, user.hashed_password):
         raise HTTPException(
-            status.HTTP_401_UNAUTHORIZED, "Incorrect email or password"
+            status.HTTP_401_UNAUTHORIZED, "Incorrect username or password"
         )
     if not user.is_active:
         raise HTTPException(status.HTTP_403_FORBIDDEN, "Account is disabled")

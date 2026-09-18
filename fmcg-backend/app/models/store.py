@@ -18,6 +18,12 @@ class Store(TimestampMixin, Base):
     longitude: Mapped[float] = mapped_column(Float)
     notes: Mapped[str | None] = mapped_column(Text, nullable=True)
     photo_url: Mapped[str | None] = mapped_column(String(500), nullable=True)
+    route_id: Mapped[int | None] = mapped_column(
+        ForeignKey("routes.id", ondelete="SET NULL"), nullable=True, index=True
+    )
+    organization_id: Mapped[int | None] = mapped_column(
+        ForeignKey("organizations.id", ondelete="CASCADE"), nullable=True, index=True
+    )
     created_by: Mapped[int | None] = mapped_column(
         ForeignKey("users.id", ondelete="SET NULL"), nullable=True
     )

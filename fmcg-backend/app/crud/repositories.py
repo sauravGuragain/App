@@ -10,7 +10,9 @@ from app.crud.base import CRUDBase
 from app.models.delivery import Delivery
 from app.models.gps import GpsPoint
 from app.models.order import Order, OrderItem
+from app.models.organization import Organization
 from app.models.product import Product
+from app.models.route import Route
 from app.models.store import Store
 from app.models.user import User
 
@@ -18,6 +20,9 @@ from app.models.user import User
 class CRUDUser(CRUDBase[User]):
     def get_by_email(self, db: Session, email: str) -> User | None:
         return db.scalar(select(User).where(User.email == email))
+
+    def get_by_username(self, db: Session, username: str) -> User | None:
+        return db.scalar(select(User).where(User.username == username))
 
 
 class CRUDProduct(CRUDBase[Product]):
@@ -59,9 +64,20 @@ class CRUDGps(CRUDBase[GpsPoint]):
                 if p.recorded_at.date().isoformat() == day]
 
 
+class CRUDOrganization(CRUDBase[Organization]):
+    def get_by_name(self, db: Session, name: str) -> Organization | None:
+        return db.scalar(select(Organization).where(Organization.name == name))
+
+
+class CRUDRoute(CRUDBase[Route]):
+    pass
+
+
 user = CRUDUser(User)
 product = CRUDProduct(Product)
 store = CRUDStore(Store)
 order = CRUDOrder(Order)
 delivery = CRUDDelivery(Delivery)
 gps = CRUDGps(GpsPoint)
+organization = CRUDOrganization(Organization)
+route = CRUDRoute(Route)

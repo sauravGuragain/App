@@ -16,7 +16,7 @@ def test_login_me_and_refresh(client, admin_headers):
     # refresh flow
     login_resp = client.post(
         "/api/v1/auth/login",
-        data={"username": "admin@example.com", "password": "changeme123"},
+        data={"username": "admin", "password": "changeme123"},
     ).json()
     refreshed = client.post(
         "/api/v1/auth/refresh", json={"refresh_token": login_resp["refresh_token"]}
@@ -31,7 +31,7 @@ def test_login_me_and_refresh(client, admin_headers):
 def test_bad_password_rejected(client):
     r = client.post(
         "/api/v1/auth/login",
-        data={"username": "admin@example.com", "password": "wrong"},
+        data={"username": "admin", "password": "wrong"},
     )
     assert r.status_code == 401
 

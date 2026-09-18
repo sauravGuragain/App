@@ -11,17 +11,31 @@ router = APIRouter()
 
 
 @router.get("", response_model=Page[UserOut])
-def list_users(db: SessionDep, page: PageDep, _: AdminUser):
-    rows, total = crud.user.list(db, page.skip, page.limit)
+def list_users(db: SessionDep, page: PageDep, admin: AdminUser):
+    # Admin only sees users in their organization
+    if admin.organization_id is None:
+        raise HTTPException(status.HTTP_403_FORBIDDEN, "Admin not assigned to organization")
+
+    filters = []  # In future, can filter by organization_id
+    rows, total = crud.user.list(db, page.skip, page.limit, *filters)
     return Page(items=rows, total=total, skip=page.skip, limit=page.limit)
 
 
 @router.post("", response_model=UserOut, status_code=status.HTTP_201_CREATED)
-def create_user(payload: UserCreate, db: SessionDep, _: AdminUser):
+def create_user(payload: UserCreate, db: SessionDep, admin: AdminUser):
+    """Create a user. Requires admin role and organization assignment."""
+    if admin.organization_id is None:
+        raise HTTPException(status.HTTP_403_FORBIDDEN, "Admin not assigned to organization")
+
     if crud.user.get_by_email(db, payload.email):
         raise HTTPException(status.HTTP_409_CONFLICT, "Email already registered")
+
+    if crud.user.get_by_username(db, payload.username):
+        raise HTTPException(status.HTTP_409_CONFLICT, "Username already taken")
+
     data = payload.model_dump(exclude={"password"})
     data["hashed_password"] = hash_password(payload.password)
+    data["organization_id"] = admin.organization_id
     return crud.user.create(db, data)
 
 

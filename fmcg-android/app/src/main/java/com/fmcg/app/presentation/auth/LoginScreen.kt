@@ -43,11 +43,11 @@ fun LoginScreen(
         Text("Sign in to continue", style = MaterialTheme.typography.bodyMedium)
 
         OutlinedTextField(
-            value = state.email,
-            onValueChange = viewModel::onEmailChange,
-            label = { Text("Email") },
+            value = state.username,
+            onValueChange = viewModel::onUsernameChange,
+            label = { Text("Username") },
             singleLine = true,
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
             modifier = Modifier.fillMaxWidth().padding(top = 24.dp),
         )
         OutlinedTextField(

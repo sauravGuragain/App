@@ -3,9 +3,11 @@ from app.crud.repositories import (
     delivery,
     gps,
     order,
+    organization,
     product,
+    route,
     store,
     user,
 )
 
-__all__ = ["user", "product", "store", "order", "delivery", "gps"]
+__all__ = ["user", "product", "store", "order", "delivery", "gps", "organization", "route"]

@@ -22,6 +22,7 @@ class StoreBase(BaseModel):
     longitude: float = Longitude
     notes: str | None = Field(default=None, max_length=1000)
     photo_url: str | None = None
+    route_id: int | None = Field(default=None)
 
 
 class StoreCreate(StoreBase):
@@ -37,9 +38,11 @@ class StoreUpdate(BaseModel):
     longitude: float | None = Field(default=None, ge=-180, le=180)
     notes: str | None = Field(default=None, max_length=1000)
     photo_url: str | None = None
+    route_id: int | None = Field(default=None)
 
 
 class StoreOut(ORMModel, StoreBase):
     id: int
+    organization_id: int | None = None
     created_by: int | None = None
     created_at: datetime
