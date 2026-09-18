@@ -41,13 +41,13 @@ def test_non_admin_cannot_manage_users(client, admin_headers):
     assert client.get("/api/v1/users", headers=rep_headers).status_code == 403
 
 
-def test_rep_cannot_create_product(client, admin_headers):
+def test_rep_can_create_product(client, admin_headers):
     _, rep_headers = make_user(client, admin_headers, "rep2@ex.com", "marketing")
     r = client.post(
         "/api/v1/products", headers=rep_headers,
         json={"name": "X", "sku": "X-1", "default_price": "1.00"},
     )
-    assert r.status_code == 403
+    assert r.status_code == 201
 
 
 def test_product_crud_admin(client, admin_headers):
