@@ -20,7 +20,9 @@ def test_upload_image_returns_url(client, admin_headers):
         files={"file": ("proof.png", _PNG, "image/png")},
     )
     assert r.status_code == 200, r.text
-    assert r.json()["url"].startswith("/media/")
+    url = r.json()["url"]
+    # Accept both local (/media/) and Supabase Storage URLs
+    assert url.startswith("/media/") or "storage/v1/object/public" in url
 
 
 def test_upload_rejects_non_image(client, admin_headers):
